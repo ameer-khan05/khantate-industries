@@ -1,57 +1,28 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import {
-  Globe,
-  Clock,
-  Briefcase,
-  ArrowRight,
-  CheckCircle2,
-  AlertCircle,
-} from "lucide-react";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { BlurFade } from "@/components/ui/blur-fade";
+import { Check, AlertCircle } from "lucide-react";
+import { useReveal } from "@/hooks/useReveal";
 
-const details = [
-  {
-    icon: Globe,
-    label: "Availability",
-    value: "Remote & On-Site · Worldwide",
-  },
-  {
-    icon: Clock,
-    label: "Response Time",
-    value: "Within 24 hours",
-  },
-  {
-    icon: Briefcase,
-    label: "Engagement Type",
-    value: "Project-Based & Retainer",
-  },
+const contactDetails = [
+  { label: "Email", value: "hello@khanate.io" },
+  { label: "Location", value: "San Francisco, CA" },
+  { label: "Availability", value: "Accepting new clients" },
 ];
 
-const interests = [
+const interestOptions = [
   "AI Strategy & Advisory",
-  "Web3 & Blockchain Strategy",
-  "Executive Education & Workshops",
+  "Web3 & Blockchain",
+  "Executive Education",
   "Innovation Roadmapping",
-  "General Inquiry",
+  "Other",
 ];
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
 export function Contact() {
+  const ref = useReveal();
   const [status, setStatus] = useState<FormStatus>("idle");
-  const [interest, setInterest] = useState("");
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -59,7 +30,6 @@ export function Contact() {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    formData.set("interest", interest);
 
     try {
       const res = await fetch("https://formspree.io/f/mojngwdo", {
@@ -71,7 +41,6 @@ export function Contact() {
       if (res.ok) {
         setStatus("success");
         form.reset();
-        setInterest("");
       } else {
         setStatus("error");
       }
@@ -80,212 +49,172 @@ export function Contact() {
     }
   }
 
+  const inputClasses =
+    "w-full bg-void border border-border-subtle text-warm-white text-[0.88rem] font-light py-3.5 px-4 rounded-sm outline-none transition-all duration-600 focus:border-gold/50 focus:shadow-[0_0_0_2px_rgba(184,149,106,0.08)] placeholder:text-txt-muted/40";
+
   return (
     <section
       id="contact"
-      className="bg-deep py-[clamp(4rem,8vw,7rem)]"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="py-24 lg:py-36 px-6 lg:px-8 bg-void"
       aria-label="Contact"
     >
-      <div className="max-w-[1200px] mx-auto px-[clamp(1.5rem,5vw,4rem)]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          {/* Left — Info */}
-          <div>
-            <BlurFade delay={0.1} inView>
-              <span className="text-blue text-[0.68rem] font-bold tracking-[0.2em] uppercase mb-4 block">
-                Get In Touch
-              </span>
-            </BlurFade>
-
-            <BlurFade delay={0.2} inView>
-              <h2
-                className="font-display text-white mb-6"
-                style={{
-                  fontSize: "clamp(2rem, 4.5vw, 3.5rem)",
-                  fontWeight: 300,
-                  lineHeight: 1.1,
-                }}
-              >
-                Let&rsquo;s Talk About{" "}
-                <span className="gradient-text">What&rsquo;s Next.</span>
-              </h2>
-            </BlurFade>
-
-            <BlurFade delay={0.3} inView>
-              <p className="text-ki-muted2 text-[0.95rem] leading-relaxed mb-10 max-w-[440px]">
-                Every engagement begins with a 30-minute introductory call to
-                understand your challenges, goals, and whether we&rsquo;re the
-                right fit. No pitch decks — just a real conversation.
-              </p>
-            </BlurFade>
-
-            <div className="space-y-0">
-              {details.map((detail, i) => (
-                <BlurFade key={detail.label} delay={0.35 + i * 0.1} inView>
-                  <div className="flex items-center gap-4 py-5 border-b border-ki-border">
-                    <detail.icon className="size-4 text-blue shrink-0" />
-                    <div>
-                      <span className="text-ki-muted text-xs font-semibold tracking-[0.1em] uppercase block mb-0.5">
-                        {detail.label}
-                      </span>
-                      <span className="text-ki-muted2 text-sm">
-                        {detail.value}
-                      </span>
-                    </div>
-                  </div>
-                </BlurFade>
-              ))}
-            </div>
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
+        {/* Left */}
+        <div>
+          <div className="reveal label-caps flex items-center gap-3 mb-5">
+            <span className="w-6 h-[0.5px] bg-gold" />
+            Get in Touch
           </div>
+          <h2
+            className="reveal reveal-delay-1 text-[clamp(2.2rem,4.5vw,3.8rem)] font-light leading-[1.05] text-warm-white mb-6"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Let&rsquo;s Build
+            <br />
+            <span className="grad-text">Something Together</span>
+          </h2>
+          <p className="reveal reveal-delay-2 text-[0.92rem] font-light text-txt-muted-light leading-[1.8] max-w-[50ch]">
+            Whether you&rsquo;re exploring AI adoption, evaluating Web3
+            opportunities, or need strategic guidance on emerging technology —
+            we&rsquo;re here to help.
+          </p>
 
-          {/* Right — Form */}
-          <BlurFade delay={0.2} inView direction="left">
-            <div className="rounded-xl border border-ki-border bg-surface/40 p-8 sm:p-10">
-              {status === "success" ? (
-                <div className="flex flex-col items-center justify-center text-center py-16">
-                  <CheckCircle2 className="size-12 text-blue mb-4" />
-                  <h3 className="text-white text-xl font-medium mb-2">
-                    Message Received
-                  </h3>
-                  <p className="text-ki-muted2 text-sm">
-                    Ameer will be in touch within 24 hours.
-                  </p>
+          <div className="mt-10">
+            {contactDetails.map((detail, i) => (
+              <div
+                key={detail.label}
+                className={`reveal reveal-delay-${i + 2} py-6 border-b border-border-subtle ${
+                  i === 0 ? "border-t" : ""
+                }`}
+              >
+                <div className="text-[0.6rem] font-medium tracking-[0.2em] uppercase text-txt-muted mb-1.5">
+                  {detail.label}
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-5">
-                  {/* Name Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="firstName"
-                        className="text-ki-muted text-xs font-semibold tracking-[0.1em] uppercase mb-2 block"
-                      >
-                        First Name
-                      </label>
-                      <Input
-                        id="firstName"
-                        name="firstName"
-                        required
-                        placeholder="Jane"
-                        className="bg-surface border-ki-border text-white placeholder:text-ki-muted h-11 rounded-lg focus:border-blue"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="lastName"
-                        className="text-ki-muted text-xs font-semibold tracking-[0.1em] uppercase mb-2 block"
-                      >
-                        Last Name
-                      </label>
-                      <Input
-                        id="lastName"
-                        name="lastName"
-                        required
-                        placeholder="Doe"
-                        className="bg-surface border-ki-border text-white placeholder:text-ki-muted h-11 rounded-lg focus:border-blue"
-                      />
-                    </div>
-                  </div>
+                <div
+                  className="text-lg font-normal text-warm-white"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {detail.value}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-                  {/* Email */}
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="text-ki-muted text-xs font-semibold tracking-[0.1em] uppercase mb-2 block"
-                    >
-                      Work Email
-                    </label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="jane@company.com"
-                      className="bg-surface border-ki-border text-white placeholder:text-ki-muted h-11 rounded-lg focus:border-blue"
-                    />
-                  </div>
-
-                  {/* Company */}
-                  <div>
-                    <label
-                      htmlFor="company"
-                      className="text-ki-muted text-xs font-semibold tracking-[0.1em] uppercase mb-2 block"
-                    >
-                      Company / Organization
-                    </label>
-                    <Input
-                      id="company"
-                      name="company"
-                      placeholder="Acme Corp"
-                      className="bg-surface border-ki-border text-white placeholder:text-ki-muted h-11 rounded-lg focus:border-blue"
-                    />
-                  </div>
-
-                  {/* Area of Interest */}
-                  <div>
-                    <label
-                      htmlFor="interest"
-                      className="text-ki-muted text-xs font-semibold tracking-[0.1em] uppercase mb-2 block"
-                    >
-                      Area of Interest
-                    </label>
-                    <Select value={interest} onValueChange={(v) => setInterest(v ?? "")}>
-                      <SelectTrigger className="bg-surface border-ki-border text-white h-11 rounded-lg data-[placeholder]:text-ki-muted">
-                        <SelectValue placeholder="Select a service" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-surface border-ki-border">
-                        {interests.map((item) => (
-                          <SelectItem
-                            key={item}
-                            value={item}
-                            className="text-ki-muted2 hover:text-white focus:text-white focus:bg-raised"
-                          >
-                            {item}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {/* Message */}
-                  <div>
-                    <label
-                      htmlFor="message"
-                      className="text-ki-muted text-xs font-semibold tracking-[0.1em] uppercase mb-2 block"
-                    >
-                      How Can We Help?
-                    </label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      rows={4}
-                      placeholder="Tell us about your challenges and goals..."
-                      className="bg-surface border-ki-border text-white placeholder:text-ki-muted rounded-lg resize-none focus:border-blue"
-                    />
-                  </div>
-
-                  {/* Error */}
-                  {status === "error" && (
-                    <div className="flex items-center gap-2 text-red-400 text-sm">
-                      <AlertCircle className="size-4" />
-                      Something went wrong. Please try again.
-                    </div>
-                  )}
-
-                  {/* Submit */}
-                  <Button
-                    type="submit"
-                    disabled={status === "submitting"}
-                    className="w-full bg-gradient-to-r from-blue to-violet text-white text-sm font-medium h-12 rounded-lg hover:opacity-90 hover:-translate-y-px transition-all duration-200 shadow-[0_0_20px_rgba(75,139,244,0.15)] disabled:opacity-50"
-                  >
-                    {status === "submitting" ? "Sending..." : "Send Message"}
-                    {status !== "submitting" && (
-                      <ArrowRight className="ml-2 size-4" />
-                    )}
-                  </Button>
-                </form>
-              )}
+        {/* Right — Form */}
+        <div className="reveal reveal-delay-2 gold-frame rounded-sm bg-charcoal p-8 lg:p-10">
+          {status === "success" ? (
+            <div className="text-center py-14 px-8">
+              <div className="w-14 h-14 border border-border-gold rounded-full flex items-center justify-center mx-auto mb-6">
+                <Check className="w-6 h-6 text-gold" />
+              </div>
+              <h3
+                className="text-[1.6rem] font-light text-warm-white mb-2"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Message Sent
+              </h3>
+              <p className="text-[0.88rem] font-light text-txt-muted-light">
+                We&rsquo;ll be in touch within 24 hours.
+              </p>
             </div>
-          </BlurFade>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="name"
+                    className="text-[0.62rem] font-medium tracking-[0.18em] uppercase text-txt-muted"
+                  >
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    placeholder="Your name"
+                    className={inputClasses}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="email"
+                    className="text-[0.62rem] font-medium tracking-[0.18em] uppercase text-txt-muted"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    placeholder="you@company.com"
+                    className={inputClasses}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 mb-5">
+                <label
+                  htmlFor="interest"
+                  className="text-[0.62rem] font-medium tracking-[0.18em] uppercase text-txt-muted"
+                >
+                  Interest
+                </label>
+                <select
+                  id="interest"
+                  name="interest"
+                  required
+                  className={`${inputClasses} appearance-none`}
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B6B6B' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 1rem center",
+                  }}
+                >
+                  <option value="">Select your interest</option>
+                  {interestOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-2 mb-7">
+                <label
+                  htmlFor="message"
+                  className="text-[0.62rem] font-medium tracking-[0.18em] uppercase text-txt-muted"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  placeholder="Tell us about your project or challenge..."
+                  className={`${inputClasses} resize-y min-h-[120px]`}
+                />
+              </div>
+
+              {status === "error" && (
+                <div className="flex items-center gap-2 text-red-400 text-sm mb-4">
+                  <AlertCircle className="size-4" />
+                  Something went wrong. Please try again.
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "submitting"}
+                className="w-full bg-gold text-void text-[0.85rem] font-medium py-4 px-8 rounded-sm border-none transition-all duration-600 hover:bg-gold-light hover:-translate-y-0.5 disabled:opacity-50"
+              >
+                {status === "submitting" ? "Sending..." : "Send Message"}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </section>

@@ -1,20 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import {
   Sheet,
   SheetTrigger,
   SheetContent,
-  SheetClose,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Insights", href: "#insights" },
+  { href: "#services", label: "Services" },
+  { href: "#work", label: "Work" },
+  { href: "#about", label: "About" },
+  { href: "#insights", label: "Insights" },
 ];
 
 export function Navbar() {
@@ -22,116 +21,124 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleNavClick = (href: string) => {
+    setOpen(false);
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-[100] h-[68px] flex items-center transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out",
         scrolled
-          ? "bg-void/80 backdrop-blur-xl border-b border-ki-border"
-          : "bg-transparent"
+          ? "bg-void/85 backdrop-blur-2xl border-b border-border-subtle"
+          : "bg-transparent border-b border-transparent"
       )}
       role="banner"
     >
       <nav
-        className="w-full max-w-[1200px] mx-auto flex items-center justify-between px-[clamp(1.5rem,5vw,4rem)]"
+        className="max-w-[1200px] mx-auto px-6 lg:px-8 h-[72px] flex items-center justify-between"
         aria-label="Main navigation"
       >
-        {/* Logo */}
+        {/* Wordmark */}
         <a
-          href="#"
-          className="flex items-center gap-3 group"
+          href="#hero"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("#hero");
+          }}
+          className="flex items-center gap-3 no-underline group"
           aria-label="Khanate Industries home"
         >
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue to-violet flex items-center justify-center text-white font-semibold text-sm tracking-tight">
-            KI
+          <div className="w-8 h-8 border border-border-gold rounded-sm flex items-center justify-center transition-all duration-600 group-hover:border-gold group-hover:bg-gold/5">
+            <span className="text-[0.6rem] font-semibold tracking-[0.15em] text-gold">
+              KI
+            </span>
           </div>
-          <span className="text-white font-medium text-sm tracking-wide hidden sm:inline">
+          <span className="text-[0.85rem] font-medium tracking-[0.08em] text-warm-white hidden sm:inline">
             Khanate Industries
           </span>
         </a>
 
-        {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-8">
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-ki-muted2 text-sm font-medium hover:text-white transition-colors duration-200"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick(link.href);
+              }}
+              className="relative text-[0.8rem] font-normal text-txt-muted-light no-underline transition-colors duration-600 hover:text-warm-white group"
             >
               {link.label}
+              <span className="absolute -bottom-1 left-0 w-0 h-[0.5px] bg-gold transition-all duration-600 ease-out group-hover:w-full" />
             </a>
           ))}
-          <a href="#contact">
-            <Button className="bg-gradient-to-r from-blue to-violet text-white text-sm font-medium px-5 h-9 rounded-lg hover:opacity-90 hover:-translate-y-px transition-all duration-200 shadow-[0_0_20px_rgba(75,139,244,0.15)]">
-              Work With Us
-              <ArrowRight className="ml-1.5 size-3.5" />
-            </Button>
+          <a
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#contact");
+            }}
+            className="inline-flex items-center gap-2 text-[0.8rem] font-medium text-gold border border-border-gold py-2 px-5 rounded-sm no-underline transition-all duration-600 hover:bg-gold/8 hover:border-gold"
+          >
+            Work With Us
+            <ArrowRight className="w-3.5 h-3.5" />
           </a>
         </div>
 
-        {/* Mobile Nav */}
-        <div className="lg:hidden">
+        {/* Mobile hamburger */}
+        <div className="md:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger>
-              <Button variant="ghost" size="icon" aria-label="Open menu">
-                <Menu className="size-5 text-white" />
-              </Button>
+              <button
+                className="flex flex-col gap-[5px] p-2 bg-transparent border-none"
+                aria-label="Open menu"
+              >
+                <span className="block w-5 h-[1px] bg-warm-white" />
+                <span className="block w-5 h-[1px] bg-warm-white" />
+                <span className="block w-5 h-[1px] bg-warm-white" />
+              </button>
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="bg-void border-ki-border w-full sm:w-[360px] p-0"
+              className="bg-void/98 backdrop-blur-3xl border-none w-full p-0"
               showCloseButton={false}
             >
-              <div className="flex flex-col h-full">
-                <div className="flex items-center justify-between p-6 border-b border-ki-border">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue to-violet flex items-center justify-center text-white font-semibold text-sm">
-                      KI
-                    </div>
-                    <span className="text-white font-medium text-sm">
-                      Khanate Industries
-                    </span>
-                  </div>
-                  <SheetClose>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      aria-label="Close menu"
-                    >
-                      <X className="size-5 text-white" />
-                    </Button>
-                  </SheetClose>
-                </div>
-
-                <nav
-                  className="flex flex-col gap-2 p-6"
-                  aria-label="Mobile navigation"
-                >
-                  {navLinks.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setOpen(false)}
-                      className="text-ki-muted2 text-lg font-medium py-3 px-4 rounded-lg hover:bg-surface hover:text-white transition-all duration-200"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                </nav>
-
-                <div className="mt-auto p-6 border-t border-ki-border">
-                  <a href="#contact" onClick={() => setOpen(false)}>
-                    <Button className="w-full bg-gradient-to-r from-blue to-violet text-white text-sm font-medium h-11 rounded-lg hover:opacity-90 transition-all duration-200">
-                      Work With Us
-                      <ArrowRight className="ml-1.5 size-3.5" />
-                    </Button>
+              <div className="flex flex-col items-center justify-center h-full gap-8">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(link.href);
+                    }}
+                    className="text-[2.5rem] font-light text-warm-white no-underline transition-colors duration-600 hover:text-gold"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {link.label}
                   </a>
-                </div>
+                ))}
+                <a
+                  href="#contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick("#contact");
+                  }}
+                  className="font-light text-[2.5rem] text-gold no-underline"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  Contact
+                </a>
               </div>
             </SheetContent>
           </Sheet>

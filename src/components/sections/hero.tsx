@@ -1,163 +1,178 @@
 "use client";
 
-import { ArrowRight, ChevronDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { DotPattern } from "@/components/ui/dot-pattern";
-import { NumberTicker } from "@/components/ui/number-ticker";
-import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
-import { BlurFade } from "@/components/ui/blur-fade";
+import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
+
+const HERO_BG =
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663431327938/RBSmLsH9Si5jtbTzPWwg6U/hero-bg-irEr8Z4jLtxgvWSfPnzx2B.webp";
 
 const stats = [
-  { value: 50, suffix: "+", label: "Enterprises Advised" },
-  { value: 10, suffix: "+", label: "Years of Expertise" },
-  { value: 4, suffix: "", label: "Core Services" },
+  { value: "50+", label: "Enterprises Advised" },
+  { value: "10+", label: "Years of Expertise" },
+  { value: "4", label: "Core Practices" },
 ];
 
 export function Hero() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoaded(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleClick = (href: string) => {
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden"
       aria-label="Hero"
     >
-      {/* Ambient Orbs */}
-      <div
-        className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full opacity-20 blur-[120px] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, #4B8BF4 0%, transparent 70%)",
-          animation: "drift-1 12s ease-in-out infinite",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute bottom-[-15%] right-[-10%] w-[600px] h-[600px] rounded-full opacity-15 blur-[140px] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, #8B5CF6 0%, transparent 70%)",
-          animation: "drift-2 15s ease-in-out infinite",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute top-[40%] right-[20%] w-[350px] h-[350px] rounded-full opacity-10 blur-[100px] pointer-events-none"
-        style={{
-          background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)",
-          animation: "drift-3 10s ease-in-out infinite",
-        }}
-        aria-hidden="true"
-      />
+      {/* Background image with overlay */}
+      <div className="absolute inset-0" aria-hidden="true">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={HERO_BG}
+          alt=""
+          className="w-full h-full object-cover opacity-30"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-void via-void/95 to-void/60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-void/40" />
+      </div>
 
-      {/* Dot Pattern */}
-      <DotPattern
-        width={40}
-        height={40}
-        cr={1}
-        className="absolute inset-0 opacity-30 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)]"
-      />
-
-      {/* Content */}
-      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-[clamp(1.5rem,5vw,4rem)] py-32 flex items-center gap-16">
-        {/* Left Column */}
-        <div className="flex-1 max-w-[720px]">
-          {/* Badge */}
-          <BlurFade delay={0.1} inView>
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-ki-border bg-surface/50 backdrop-blur-sm mb-8">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-blue" />
-              </span>
-              <AnimatedShinyText className="text-ki-muted2 text-xs font-semibold tracking-[0.15em] uppercase">
-                AI &amp; Web3 Advisory &middot; Est. 2024
-              </AnimatedShinyText>
-            </div>
-          </BlurFade>
-
-          {/* Headline */}
-          <BlurFade delay={0.2} inView>
-            <h1
-              className="font-display leading-[1.05] mb-6"
-              style={{
-                fontSize: "clamp(3.5rem, 8.5vw, 8rem)",
-                fontWeight: 300,
-              }}
+      <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-8 w-full py-32 lg:py-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-screen">
+          {/* Left column — content */}
+          <div className="lg:col-span-7">
+            {/* Badge */}
+            <div
+              className={`inline-flex items-center gap-2.5 mb-10 transition-all duration-1000 ease-out ${
+                loaded
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4"
+              }`}
             >
-              The Future
-              <br />
-              Belongs to the
-              <br />
-              <span className="gradient-text">Informed.</span>
-            </h1>
-          </BlurFade>
+              <div className="w-1.5 h-1.5 rounded-full bg-gold" />
+              <span className="text-[0.68rem] font-medium tracking-[0.2em] uppercase text-gold">
+                AI &amp; Web3 Advisory
+              </span>
+              <span className="text-[0.68rem] text-txt-muted mx-1">
+                &middot;
+              </span>
+              <span className="text-[0.68rem] font-normal tracking-[0.12em] uppercase text-txt-muted-light">
+                Est. 2024
+              </span>
+            </div>
 
-          {/* Subheadline */}
-          <BlurFade delay={0.35} inView>
-            <p className="text-ki-muted2 text-lg leading-relaxed max-w-[540px] mb-10">
+            {/* Headline — word-by-word reveal */}
+            <h1
+              className="font-display font-light leading-[0.95] tracking-tight mb-10"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {["The", "Future", "Belongs", "to the"].map((word, i) => (
+                <span
+                  key={i}
+                  className="inline-block mr-[0.3em] text-[clamp(3rem,7vw,6.5rem)] text-warm-white word-reveal"
+                  style={{ animationDelay: `${0.3 + i * 0.12}s` }}
+                >
+                  {word}
+                </span>
+              ))}
+              <br className="hidden sm:block" />
+              <span
+                className="inline-block text-[clamp(3rem,7vw,6.5rem)] grad-text word-reveal"
+                style={{ animationDelay: "0.8s" }}
+              >
+                Informed.
+              </span>
+              {/* Gold underline */}
+              <span className="block h-[1.5px] bg-gradient-to-r from-gold-light via-gold to-gold-dark mt-3 draw-line max-w-[280px]" />
+            </h1>
+
+            {/* Subheadline */}
+            <p
+              className={`text-[clamp(0.95rem,1.4vw,1.05rem)] font-light text-txt-muted-light max-w-[48ch] leading-[1.8] mb-12 transition-all duration-1000 ease-out delay-700 ${
+                loaded
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-4"
+              }`}
+            >
               Khanate Industries helps business leaders and enterprises cut
               through the noise — translating AI and Web3 from buzzwords into
               measurable competitive advantage.
             </p>
-          </BlurFade>
 
-          {/* CTAs */}
-          <BlurFade delay={0.5} inView>
-            <div className="flex flex-wrap gap-4">
-              <a href="#contact">
-                <Button className="bg-gradient-to-r from-blue to-violet text-white text-sm font-medium px-6 h-11 rounded-lg hover:opacity-90 hover:-translate-y-[2px] transition-all duration-200 shadow-[0_0_24px_rgba(75,139,244,0.2)]">
-                  Book a Strategy Call
-                  <ArrowRight className="ml-2 size-4" />
-                </Button>
-              </a>
-              <a href="#services">
-                <Button
-                  variant="outline"
-                  className="text-ki-muted2 border-ki-border text-sm font-medium px-6 h-11 rounded-lg hover:text-white hover:border-ki-border2 hover:-translate-y-px transition-all duration-200"
-                >
-                  Explore Services
-                  <ArrowRight className="ml-2 size-4" />
-                </Button>
-              </a>
-            </div>
-          </BlurFade>
-        </div>
-
-        {/* Stat Panel — desktop only */}
-        <BlurFade delay={0.6} inView direction="left">
-          <div className="hidden lg:flex flex-col gap-0 w-[260px] rounded-xl border border-ki-border bg-surface/60 backdrop-blur-md overflow-hidden">
-            {stats.map((stat, i) => (
-              <div
-                key={stat.label}
-                className={`flex flex-col items-center py-7 px-6 ${
-                  i < stats.length - 1 ? "border-b border-ki-border" : ""
-                }`}
+            {/* CTAs */}
+            <div
+              className={`flex items-center gap-5 flex-wrap transition-all duration-1000 ease-out ${
+                loaded
+                  ? "opacity-100 translate-y-0 delay-900"
+                  : "opacity-0 translate-y-4"
+              }`}
+            >
+              <button
+                onClick={() => handleClick("#contact")}
+                className="group inline-flex items-center gap-2.5 bg-gold text-void text-[0.85rem] font-medium py-3.5 px-7 rounded-sm border-none transition-all duration-600 hover:bg-gold-light hover:-translate-y-0.5"
               >
-                <div className="text-white font-display text-4xl font-light mb-1.5 flex items-baseline">
-                  <NumberTicker value={stat.value} delay={0.8 + i * 0.2} />
-                  {stat.suffix && (
-                    <span className="gradient-text">{stat.suffix}</span>
-                  )}
-                </div>
-                <span className="text-ki-muted text-xs font-semibold tracking-[0.12em] uppercase">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
+                Book a Strategy Call
+                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-600 group-hover:translate-x-1" />
+              </button>
+              <button
+                onClick={() => handleClick("#services")}
+                className="group inline-flex items-center gap-2 text-txt-muted-light text-[0.85rem] font-normal py-3.5 px-6 rounded-sm border border-border-subtle transition-all duration-600 hover:border-border-gold hover:text-warm-white hover:bg-white/[0.02]"
+              >
+                Explore Services
+                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-600 group-hover:translate-x-1" />
+              </button>
+            </div>
           </div>
-        </BlurFade>
+
+          {/* Right column — stats */}
+          <div className="lg:col-span-5 hidden lg:flex flex-col items-end">
+            <div
+              className={`gold-frame rounded-sm overflow-hidden transition-all duration-1000 ease-out ${
+                loaded
+                  ? "opacity-100 translate-y-0 delay-500"
+                  : "opacity-0 translate-y-6"
+              }`}
+            >
+              {stats.map((stat, i) => (
+                <div
+                  key={stat.label}
+                  className={`group py-7 px-9 transition-colors duration-600 hover:bg-white/[0.02] ${
+                    i < stats.length - 1 ? "border-b border-border-subtle" : ""
+                  }`}
+                >
+                  <div
+                    className="text-[2.8rem] font-light leading-none mb-1.5 grad-text"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="text-[0.68rem] font-normal tracking-[0.18em] uppercase text-txt-muted transition-colors duration-600 group-hover:text-txt-muted-light">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-[clamp(1.5rem,5vw,4rem)] flex items-center gap-3 text-ki-muted">
-        <div className="w-px h-8 bg-ki-border relative overflow-hidden">
-          <div
-            className="absolute top-0 left-0 w-full bg-blue"
-            style={{
-              height: "100%",
-              animation: "fade-up 2s ease-in-out infinite",
-            }}
-          />
+      {/* Scroll indicator */}
+      <div
+        className={`absolute bottom-10 left-6 lg:left-8 flex items-center gap-4 transition-all duration-1000 ease-out ${
+          loaded ? "opacity-100 delay-1200" : "opacity-0"
+        }`}
+      >
+        <div className="w-[1px] h-10 bg-border-subtle relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-gold animate-pulse" />
         </div>
-        <span className="text-xs font-medium tracking-[0.15em] uppercase flex items-center gap-1.5">
-          Scroll to explore
-          <ChevronDown className="size-3 animate-bounce" />
+        <span className="text-[0.6rem] font-medium tracking-[0.25em] uppercase text-txt-muted">
+          Scroll
         </span>
       </div>
     </section>

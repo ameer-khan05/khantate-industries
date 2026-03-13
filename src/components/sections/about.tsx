@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { BorderBeam } from "@/components/ui/border-beam";
-import { BlurFade } from "@/components/ui/blur-fade";
+import { useReveal } from "@/hooks/useReveal";
 
-const expertisePills = [
+const FOUNDER_IMG =
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&fit=crop&crop=face&auto=format";
+
+const skills = [
   "Machine Learning",
   "Blockchain",
   "DeFi",
@@ -15,103 +17,90 @@ const expertisePills = [
 ];
 
 export function About() {
+  const ref = useReveal();
+
   return (
     <section
       id="about"
-      className="bg-deep py-[clamp(4rem,8vw,7rem)]"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="py-24 lg:py-36 px-6 lg:px-8 bg-void"
       aria-label="About"
     >
-      <div className="max-w-[1200px] mx-auto px-[clamp(1.5rem,5vw,4rem)]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Image Column */}
-          <BlurFade delay={0.1} inView>
-            <div className="relative">
-              <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-ki-border">
-                <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
-                  alt="Ameer Khan, Founder of Khanate Industries"
-                  fill
-                  className="object-cover"
-                  loading="lazy"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-void/60 via-transparent to-transparent" />
-                <BorderBeam
-                  colorFrom="#4B8BF4"
-                  colorTo="#8B5CF6"
-                  size={120}
-                  duration={8}
-                  borderWidth={1.5}
-                />
-                {/* Experience Badge */}
-                <div className="absolute bottom-6 left-6 flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-surface/80 backdrop-blur-md border border-ki-border">
-                  <span className="text-white text-sm font-medium">
-                    10+ Years Expertise
-                  </span>
-                </div>
+      <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+        {/* Portrait */}
+        <div className="reveal">
+          <div className="relative gold-frame rounded-sm overflow-hidden group">
+            <div className="aspect-[3/4] max-h-[560px] overflow-hidden relative">
+              <Image
+                src={FOUNDER_IMG}
+                alt="Ameer Khan, Founder of Khanate Industries"
+                fill
+                className="object-cover object-top grayscale-[15%] contrast-[1.03] transition-all duration-700 group-hover:grayscale-0"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                loading="lazy"
+              />
+            </div>
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-void/50 via-transparent to-transparent" />
+            {/* Badge */}
+            <div className="absolute bottom-6 left-6 bg-void/80 backdrop-blur-xl border border-border-subtle rounded-sm py-4 px-5">
+              <div
+                className="text-[2rem] font-light leading-none grad-text"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                10+
+              </div>
+              <div className="text-[0.6rem] font-medium tracking-[0.15em] uppercase text-txt-muted mt-1">
+                Years Expertise
               </div>
             </div>
-          </BlurFade>
+          </div>
+        </div>
 
-          {/* Text Column */}
-          <div>
-            <BlurFade delay={0.15} inView>
-              <span className="text-blue text-[0.68rem] font-bold tracking-[0.2em] uppercase mb-4 block">
-                Founder
-              </span>
-            </BlurFade>
+        {/* Content */}
+        <div>
+          <div className="reveal label-caps flex items-center gap-3 mb-5">
+            <span className="w-6 h-[0.5px] bg-gold" />
+            Founder
+          </div>
+          <h2
+            className="reveal reveal-delay-1 font-display text-[clamp(2.2rem,4.5vw,3.8rem)] font-light leading-[1.05] text-warm-white mb-8"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            Ameer Khan
+          </h2>
 
-            <BlurFade delay={0.25} inView>
-              <h2
-                className="font-display text-white mb-6"
-                style={{
-                  fontSize: "clamp(2.5rem, 5vw, 4rem)",
-                  fontWeight: 300,
-                  lineHeight: 1.1,
-                }}
+          <blockquote
+            className="reveal reveal-delay-2 text-[clamp(1.2rem,2vw,1.6rem)] font-light italic text-warm-white leading-[1.5] my-8 pl-6 border-l border-gold"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            &ldquo;Most organizations don&rsquo;t have an AI problem.
+            <br />
+            They have a clarity problem.&rdquo;
+          </blockquote>
+
+          <p className="reveal reveal-delay-2 text-[0.92rem] font-light text-txt-muted-light leading-[1.8] mb-4 max-w-[50ch]">
+            Ameer Khan is a technologist, strategist, and educator at the
+            intersection of artificial intelligence and decentralized systems.
+            Over a decade working inside and alongside enterprises, Ameer has
+            developed a rare ability to translate deeply technical concepts into
+            actionable business strategy.
+          </p>
+          <p className="reveal reveal-delay-3 text-[0.92rem] font-light text-txt-muted-light leading-[1.8] max-w-[50ch]">
+            Khanate Industries exists because the gap between what&rsquo;s
+            possible with AI and Web3 — and what most organizations actually
+            implement — remains enormous. We close that gap.
+          </p>
+
+          <div className="reveal reveal-delay-4 flex flex-wrap gap-2 mt-8">
+            {skills.map((skill) => (
+              <span
+                key={skill}
+                className="text-[0.68rem] font-normal tracking-wide text-txt-muted-light py-1.5 px-3 border border-border-subtle rounded-sm transition-all duration-600 hover:border-border-gold hover:text-gold"
               >
-                Ameer Khan
-              </h2>
-            </BlurFade>
-
-            <BlurFade delay={0.35} inView>
-              <blockquote className="border-l-2 border-blue pl-5 mb-8">
-                <p className="text-ki-muted2 text-lg italic font-light leading-relaxed">
-                  &ldquo;Most organizations don&rsquo;t have an AI problem. They
-                  have a clarity problem.&rdquo;
-                </p>
-              </blockquote>
-            </BlurFade>
-
-            <BlurFade delay={0.45} inView>
-              <div className="space-y-4 mb-8">
-                <p className="text-ki-muted2 text-[0.95rem] leading-relaxed">
-                  With over a decade of experience at the intersection of
-                  emerging technology and business strategy, Ameer founded
-                  Khanate Industries to bridge the gap between technical
-                  possibility and strategic reality.
-                </p>
-                <p className="text-ki-muted2 text-[0.95rem] leading-relaxed">
-                  His advisory work spans Fortune 500 enterprises to high-growth
-                  startups, helping leadership teams make informed decisions
-                  about AI adoption, Web3 integration, and digital
-                  transformation — without the hype.
-                </p>
-              </div>
-            </BlurFade>
-
-            <BlurFade delay={0.55} inView>
-              <div className="flex flex-wrap gap-2">
-                {expertisePills.map((pill) => (
-                  <span
-                    key={pill}
-                    className="px-3 py-1.5 rounded-full border border-ki-border bg-surface text-ki-muted2 text-xs font-medium tracking-wide"
-                  >
-                    {pill}
-                  </span>
-                ))}
-              </div>
-            </BlurFade>
+                {skill}
+              </span>
+            ))}
           </div>
         </div>
       </div>

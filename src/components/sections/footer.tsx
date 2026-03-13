@@ -1,47 +1,45 @@
-const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Insights", href: "#insights" },
-  { label: "Contact", href: "#contact" },
+const footerLinks = [
+  { href: "#about", label: "About" },
+  { href: "#services", label: "Services" },
+  { href: "#work", label: "Projects" },
+  { href: "#insights", label: "Insights" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-ki-border bg-void" role="contentinfo">
-      <div className="max-w-[1200px] mx-auto px-[clamp(1.5rem,5vw,4rem)] py-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-        {/* Logo */}
+    <footer className="border-t border-border-subtle py-10 px-6 lg:px-8 bg-void" role="contentinfo">
+      <div className="max-w-[1200px] mx-auto flex flex-wrap items-center justify-between gap-6">
         <a
-          href="#"
-          className="flex items-center gap-3"
+          href="#hero"
+          className="flex items-center gap-3 no-underline group"
           aria-label="Khanate Industries home"
         >
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue to-violet flex items-center justify-center text-white font-semibold text-xs tracking-tight">
-            KI
+          <div className="w-6 h-6 border border-border-gold rounded-sm flex items-center justify-center">
+            <span className="text-[0.5rem] font-semibold tracking-[0.1em] text-gold">
+              KI
+            </span>
           </div>
-          <span className="text-white font-medium text-sm">
+          <span className="text-[0.82rem] font-medium tracking-[0.06em] text-warm-white">
             Khanate Industries
           </span>
         </a>
 
-        {/* Nav */}
-        <nav
-          className="flex items-center gap-6"
-          aria-label="Footer navigation"
-        >
-          {navLinks.map((link) => (
+        <nav className="flex flex-wrap gap-8" aria-label="Footer navigation">
+          {footerLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-ki-muted text-sm hover:text-ki-muted2 transition-colors duration-200"
+              className="text-[0.75rem] font-light text-txt-muted no-underline transition-colors duration-600 hover:text-warm-white"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        {/* Copyright */}
-        <p className="text-ki-muted text-xs">
-          &copy; 2026 Khanate Industries &middot; All rights reserved.
+        <p className="text-[0.7rem] font-light text-txt-muted">
+          &copy; {new Date().getFullYear()} Khanate Industries. All rights
+          reserved.
         </p>
       </div>
     </footer>

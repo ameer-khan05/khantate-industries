@@ -1,5 +1,3 @@
-import { Marquee } from "@/components/ui/marquee";
-
 const items = [
   "Artificial Intelligence Strategy",
   "Web3 & Blockchain Advisory",
@@ -9,31 +7,25 @@ const items = [
   "DeFi Strategy",
 ];
 
-function TickerItem({ text }: { text: string }) {
-  return (
-    <div className="flex items-center gap-6 mx-6">
-      <span className="text-ki-muted2 text-sm font-medium tracking-wide whitespace-nowrap">
-        {text}
-      </span>
-      <span
-        className="w-1.5 h-1.5 rounded-full bg-blue shrink-0"
-        aria-hidden="true"
-      />
-    </div>
-  );
-}
+const allItems = [...items, ...items];
 
 export function Ticker() {
   return (
-    <section
-      className="border-t border-b border-ki-border bg-deep py-4 overflow-hidden"
-      aria-label="Services marquee"
+    <div
+      className="border-y border-border-subtle py-4 overflow-hidden bg-charcoal"
+      aria-hidden="true"
     >
-      <Marquee pauseOnHover className="[--duration:30s]">
-        {items.map((item) => (
-          <TickerItem key={item} text={item} />
+      <div className="flex gap-14 animate-ticker whitespace-nowrap">
+        {allItems.map((item, index) => (
+          <span
+            key={`${item}-${index}`}
+            className="inline-flex items-center gap-3 text-[0.7rem] font-normal tracking-[0.15em] uppercase text-txt-muted shrink-0"
+          >
+            <span className="w-1 h-1 bg-gold/60 rounded-full shrink-0" />
+            {item}
+          </span>
         ))}
-      </Marquee>
-    </section>
+      </div>
+    </div>
   );
 }

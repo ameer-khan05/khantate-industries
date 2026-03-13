@@ -1,108 +1,85 @@
 "use client";
 
-import { Clock, User } from "lucide-react";
-import { BlurFade } from "@/components/ui/blur-fade";
+import { useReveal } from "@/hooks/useReveal";
 
-const articles = [
+const insights = [
   {
-    tag: "Artificial Intelligence",
-    tagColor: "text-blue",
-    title: "What Executives Get Wrong About AI (And How to Fix It)",
+    tag: "AI Strategy",
+    title: "The Five Questions Every Board Should Ask About AI",
     excerpt:
-      "The biggest mistake isn't moving too slowly on AI — it's moving fast without a framework for evaluating what actually matters for your business.",
-    readTime: "6 min read",
-    author: "Ameer Khan",
+      "Before approving another AI initiative, board members need to move beyond the hype. Here's a framework for substantive oversight.",
+    date: "March 2026",
+    readTime: "8 min read",
   },
   {
     tag: "Web3",
-    tagColor: "text-violet",
-    title: "The Web3 Moment That Actually Matters for Enterprise",
+    title: "Why Most Enterprise Blockchain Projects Fail",
     excerpt:
-      "Forget the hype cycles. There's one structural shift in Web3 that enterprise leaders can't afford to ignore — and it has nothing to do with tokens.",
-    readTime: "8 min read",
-    author: "Ameer Khan",
+      "After advising dozens of blockchain initiatives, patterns emerge. The failures rarely stem from technology — they stem from misaligned incentives.",
+    date: "February 2026",
+    readTime: "12 min read",
   },
   {
-    tag: "Strategy",
-    tagColor: "text-cyan",
-    title: "Building an AI-Ready Organization Before You Need One",
+    tag: "Education",
+    title: "Teaching AI to Non-Technical Leaders",
     excerpt:
-      "The organizations that will win the AI era aren't the ones with the biggest budgets. They're the ones building the right foundations today.",
-    readTime: "5 min read",
-    author: "Ameer Khan",
+      "The gap between technical possibility and business understanding is where value gets lost. Here's how we bridge it.",
+    date: "January 2026",
+    readTime: "6 min read",
   },
 ];
 
 export function Insights() {
+  const ref = useReveal();
+
   return (
     <section
       id="insights"
-      className="py-[clamp(4rem,8vw,7rem)]"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="py-24 lg:py-36 px-6 lg:px-8 bg-charcoal"
       aria-label="Insights"
     >
-      <div className="max-w-[1200px] mx-auto px-[clamp(1.5rem,5vw,4rem)]">
-        {/* Section Header */}
-        <div className="mb-14">
-          <BlurFade delay={0.1} inView>
-            <span className="text-blue text-[0.68rem] font-bold tracking-[0.2em] uppercase mb-4 block">
-              Insights
-            </span>
-          </BlurFade>
-          <BlurFade delay={0.2} inView>
-            <h2
-              className="font-display text-white"
-              style={{
-                fontSize: "clamp(2rem, 4.5vw, 3.5rem)",
-                fontWeight: 300,
-                lineHeight: 1.1,
-              }}
-            >
-              Thinking Out Loud
-            </h2>
-          </BlurFade>
+      <div className="max-w-[1200px] mx-auto">
+        <div className="reveal label-caps flex items-center gap-3 mb-5">
+          <span className="w-6 h-[0.5px] bg-gold" />
+          Insights
         </div>
+        <h2
+          className="reveal reveal-delay-1 text-[clamp(2.2rem,4.5vw,3.8rem)] font-light leading-[1.05] text-warm-white mb-14"
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          Thinking &amp; <span className="grad-text">Writing</span>
+        </h2>
 
-        {/* Article Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {articles.map((article, i) => (
-            <BlurFade key={article.title} delay={0.15 + i * 0.1} inView>
-              <a
-                href="#insights"
-                className="group block h-full"
-                aria-label={`Read: ${article.title}`}
+          {insights.map((insight, index) => (
+            <a
+              key={insight.title}
+              href="#insights"
+              className={`reveal reveal-delay-${index + 1} block gold-frame rounded-sm p-8 bg-void transition-all duration-600 hover:border-gold/40 group no-underline`}
+              aria-label={`Read: ${insight.title}`}
+            >
+              <div className="inline-block text-[0.6rem] font-medium tracking-[0.18em] uppercase text-gold bg-gold/8 border border-border-gold py-1 px-2.5 rounded-sm mb-6">
+                {insight.tag}
+              </div>
+
+              <h3
+                className="text-[1.2rem] font-normal text-warm-white leading-[1.35] mb-4 transition-colors duration-600 group-hover:text-gold-light"
+                style={{ fontFamily: "var(--font-display)" }}
               >
-                <article className="flex flex-col h-full p-7 rounded-xl border border-ki-border bg-surface/30 hover:border-blue/40 hover:bg-raised/30 hover:-translate-y-[2px] transition-all duration-300">
-                  {/* Tag */}
-                  <span
-                    className={`${article.tagColor} text-[0.62rem] font-bold tracking-[0.18em] uppercase mb-4`}
-                  >
-                    {article.tag}
-                  </span>
+                {insight.title}
+              </h3>
 
-                  {/* Title */}
-                  <h3 className="text-white text-lg font-medium leading-snug mb-3 group-hover:text-white/90 transition-colors duration-200">
-                    {article.title}
-                  </h3>
+              <p className="text-[0.82rem] font-light text-txt-muted-light leading-[1.7] mb-6">
+                {insight.excerpt}
+              </p>
 
-                  {/* Excerpt */}
-                  <p className="text-ki-muted2 text-sm leading-relaxed mb-6 flex-1">
-                    {article.excerpt}
-                  </p>
-
-                  {/* Meta */}
-                  <div className="flex items-center gap-4 pt-4 border-t border-ki-border text-ki-muted text-xs">
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="size-3" />
-                      {article.readTime}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <User className="size-3" />
-                      {article.author}
-                    </span>
-                  </div>
-                </article>
-              </a>
-            </BlurFade>
+              <div className="text-[0.68rem] text-txt-muted border-t border-border-subtle pt-4 flex items-center gap-2">
+                <span>{insight.date}</span>
+                <span className="text-gold/40">&middot;</span>
+                <span>{insight.readTime}</span>
+              </div>
+            </a>
           ))}
         </div>
       </div>
