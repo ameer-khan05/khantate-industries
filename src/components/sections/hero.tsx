@@ -1,179 +1,62 @@
-"use client";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 
-import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
-
-const HERO_BG =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663431327938/RBSmLsH9Si5jtbTzPWwg6U/hero-bg-irEr8Z4jLtxgvWSfPnzx2B.webp";
-
-const stats = [
-  { value: "50+", label: "Enterprises Advised" },
-  { value: "10+", label: "Years of Expertise" },
-  { value: "4", label: "Core Practices" },
-];
+const ventures = ["MedVault", "Credexai", "Flip Labs", "Mithara Institute"];
 
 export function Hero() {
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleClick = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden"
-      aria-label="Hero"
-    >
-      {/* Background image with overlay */}
-      <div className="absolute inset-0" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={HERO_BG}
-          alt=""
-          className="w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-void via-void/95 to-void/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-void/40" />
-      </div>
+    <section id="top" className="relative overflow-hidden border-b border-black/20 pt-[68px]">
+      <div className="absolute right-[-5rem] top-24 hidden h-[31rem] w-[31rem] rounded-full border-[80px] border-[#2447e8]/10 lg:block" aria-hidden="true" />
+      <div className="section-shell grid min-h-[calc(100vh-68px)] grid-cols-1 items-stretch lg:grid-cols-[1fr_0.38fr]">
+        <div className="flex flex-col justify-between py-12 lg:border-r lg:border-black/20 lg:py-16 lg:pr-14">
+          <div className="enter enter-1 flex items-center justify-between gap-6">
+            <span className="eyebrow text-[#2447e8]">Operator · Advisor · Builder</span>
+            <span className="hidden text-[0.68rem] font-bold uppercase tracking-[0.12em] text-black/45 sm:block">
+              Chicago / Working globally
+            </span>
+          </div>
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-6 lg:px-8 w-full py-32 lg:py-0">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-screen">
-          {/* Left column — content */}
-          <div className="lg:col-span-7">
-            {/* Badge */}
-            <div
-              className={`inline-flex items-center gap-2.5 mb-10 transition-all duration-1000 ease-out ${
-                loaded
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <div className="w-1.5 h-1.5 rounded-full bg-gold" />
-              <span className="text-[0.68rem] font-medium tracking-[0.2em] uppercase text-gold">
-                AI &amp; Web3 Advisory
+          <div className="py-16 lg:py-10">
+            <h1 className="display enter enter-2 max-w-[11ch] text-[clamp(4rem,9vw,8.8rem)] leading-[0.82]">
+              I help technical ideas become{" "}
+              <span className="relative inline-block text-[#2447e8]">
+                real businesses.
+                <span className="absolute -bottom-2 left-1/4 h-[0.12em] w-3/4 bg-[#ee5d32]" aria-hidden="true" />
               </span>
-              <span className="text-[0.68rem] text-txt-muted mx-1">
-                &middot;
-              </span>
-              <span className="text-[0.68rem] font-normal tracking-[0.12em] uppercase text-txt-muted-light">
-                Est. 2024
-              </span>
-            </div>
-
-            {/* Headline — word-by-word reveal */}
-            <h1
-              className="font-display font-light leading-[0.95] tracking-tight mb-10"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              {["The", "Future", "Belongs", "to the"].map((word, i) => (
-                <span
-                  key={i}
-                  className="inline-block mr-[0.3em] text-[clamp(3rem,7vw,6.5rem)] text-warm-white word-reveal"
-                  style={{ animationDelay: `${0.3 + i * 0.12}s` }}
-                >
-                  {word}
-                </span>
-              ))}
-              <br className="hidden sm:block" />
-              <span
-                className="inline-block text-[clamp(3rem,7vw,6.5rem)] grad-text word-reveal"
-                style={{ animationDelay: "0.8s" }}
-              >
-                Informed.
-              </span>
-              {/* Gold underline */}
-              <span className="block h-[1.5px] bg-gradient-to-r from-gold-light via-gold to-gold-dark mt-3 draw-line max-w-[280px]" />
             </h1>
+          </div>
 
-            {/* Subheadline */}
-            <p
-              className={`text-[clamp(0.95rem,1.4vw,1.05rem)] font-light text-txt-muted-light max-w-[48ch] leading-[1.8] mb-12 transition-all duration-1000 ease-out delay-700 ${
-                loaded
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              Khanate Industries helps business leaders and enterprises cut
-              through the noise — translating AI and Web3 from buzzwords into
-              measurable competitive advantage.
+          <div className="enter enter-3 grid gap-8 border-t border-black/20 pt-7 md:grid-cols-[1fr_auto] md:items-end">
+            <p className="max-w-[59ch] text-base leading-7 text-black/65 md:text-lg">
+              I&apos;m Ameer Khan. I work across product, go-to-market, and business
+              development with ambitious companies in AI, digital health, agent
+              infrastructure, and decentralized finance.
             </p>
-
-            {/* CTAs */}
-            <div
-              className={`flex items-center gap-5 flex-wrap transition-all duration-1000 ease-out ${
-                loaded
-                  ? "opacity-100 translate-y-0 delay-900"
-                  : "opacity-0 translate-y-4"
-              }`}
-            >
-              <button
-                onClick={() => handleClick("#contact")}
-                className="group inline-flex items-center gap-2.5 bg-gold text-void text-[0.85rem] font-medium py-3.5 px-7 rounded-sm border-none transition-all duration-600 hover:bg-gold-light hover:-translate-y-0.5"
-              >
-                Book a Strategy Call
-                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-600 group-hover:translate-x-1" />
-              </button>
-              <button
-                onClick={() => handleClick("#services")}
-                className="group inline-flex items-center gap-2 text-txt-muted-light text-[0.85rem] font-normal py-3.5 px-6 rounded-sm border border-border-subtle transition-all duration-600 hover:border-border-gold hover:text-warm-white hover:bg-white/[0.02]"
-              >
-                Explore Services
-                <ArrowRight className="w-3.5 h-3.5 transition-transform duration-600 group-hover:translate-x-1" />
-              </button>
-            </div>
-          </div>
-
-          {/* Right column — stats */}
-          <div className="lg:col-span-5 hidden lg:flex flex-col items-end">
-            <div
-              className={`gold-frame rounded-sm overflow-hidden transition-all duration-1000 ease-out ${
-                loaded
-                  ? "opacity-100 translate-y-0 delay-500"
-                  : "opacity-0 translate-y-6"
-              }`}
-            >
-              {stats.map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className={`group py-7 px-9 transition-colors duration-600 hover:bg-white/[0.02] ${
-                    i < stats.length - 1 ? "border-b border-border-subtle" : ""
-                  }`}
-                >
-                  <div
-                    className="text-[2.8rem] font-light leading-none mb-1.5 grad-text"
-                    style={{ fontFamily: "var(--font-display)" }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div className="text-[0.68rem] font-normal tracking-[0.18em] uppercase text-txt-muted transition-colors duration-600 group-hover:text-txt-muted-light">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
+            <div className="flex flex-wrap gap-3">
+              <a href="#ventures" className="inline-flex items-center gap-3 bg-[#17191d] px-5 py-3.5 text-[0.72rem] font-bold uppercase tracking-[0.1em] text-white no-underline transition-transform hover:-translate-y-0.5">
+                Explore the portfolio <ArrowDown size={15} />
+              </a>
+              <a href="#contact" className="inline-flex items-center gap-3 border border-black/40 px-5 py-3.5 text-[0.72rem] font-bold uppercase tracking-[0.1em] no-underline transition-colors hover:bg-white/50">
+                Work with me <ArrowUpRight size={15} />
+              </a>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div
-        className={`absolute bottom-10 left-6 lg:left-8 flex items-center gap-4 transition-all duration-1000 ease-out ${
-          loaded ? "opacity-100 delay-1200" : "opacity-0"
-        }`}
-      >
-        <div className="w-[1px] h-10 bg-border-subtle relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-gold animate-pulse" />
-        </div>
-        <span className="text-[0.6rem] font-medium tracking-[0.25em] uppercase text-txt-muted">
-          Scroll
-        </span>
+        <aside className="enter enter-4 flex flex-col justify-end border-t border-black/20 py-10 lg:border-t-0 lg:py-16 lg:pl-10">
+          <p className="mb-5 text-[0.68rem] font-bold uppercase tracking-[0.14em] text-black/45">Currently building with</p>
+          <ol className="border-t border-black/20">
+            {ventures.map((venture, index) => (
+              <li key={venture} className="flex items-center justify-between border-b border-black/20 py-4">
+                <span className="display text-[1.55rem]">{venture}</span>
+                <span className="text-[0.65rem] font-bold text-black/35">0{index + 1}</span>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-8 max-w-[28ch] text-sm leading-6 text-black/55">
+            Four active ventures. One operating discipline: make the product legible,
+            useful, and commercially real.
+          </p>
+        </aside>
       </div>
     </section>
   );

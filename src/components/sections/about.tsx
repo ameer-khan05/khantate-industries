@@ -1,106 +1,45 @@
-"use client";
-
-import Image from "next/image";
-import { useReveal } from "@/hooks/useReveal";
-
-const FOUNDER_IMG = "/ameer-khan.jpg";
-
-const skills = [
-  "Machine Learning",
-  "Blockchain",
-  "DeFi",
-  "LLMs",
-  "AI Ethics",
-  "Smart Contracts",
-  "Product Strategy",
-];
-
 export function About() {
-  const ref = useReveal();
-
   return (
-    <section
-      id="about"
-      ref={ref as React.RefObject<HTMLElement>}
-      className="py-24 lg:py-36 px-6 lg:px-8 bg-void"
-      aria-label="About"
-    >
-      <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
-        {/* Portrait */}
-        <div className="reveal">
-          <div className="relative gold-frame rounded-sm overflow-hidden group">
-            <div className="aspect-[3/4] max-h-[560px] overflow-hidden relative">
-              <Image
-                src={FOUNDER_IMG}
-                alt="Ameer Khan, Founder of Khanate Industries"
-                fill
-                className="object-cover object-top grayscale-[15%] contrast-[1.03] transition-all duration-700 group-hover:grayscale-0"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                loading="lazy"
-              />
-            </div>
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-void/50 via-transparent to-transparent" />
-            {/* Badge */}
-            <div className="absolute bottom-6 left-6 bg-void/80 backdrop-blur-xl border border-border-subtle rounded-sm py-4 px-5">
-              <div
-                className="text-[2rem] font-light leading-none grad-text"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                10+
-              </div>
-              <div className="text-[0.6rem] font-medium tracking-[0.15em] uppercase text-txt-muted mt-1">
-                Years Expertise
-              </div>
-            </div>
+    <section id="about" className="border-b border-black/20 py-20 lg:py-28" aria-labelledby="about-title">
+      <div className="section-shell grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
+        <div className="portrait-placeholder relative min-h-[32rem] overflow-hidden border border-black/25 p-7 text-white">
+          <div className="flex items-center justify-between text-[0.65rem] font-bold uppercase tracking-[0.13em]">
+            <span>Portrait placeholder</span>
+            <span>To be replaced</span>
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="display text-[clamp(8rem,22vw,15rem)] leading-none tracking-[-0.1em] text-white/95">AK</span>
+          </div>
+          <div className="absolute inset-x-7 bottom-7 flex items-end justify-between gap-5 border-t border-white/50 pt-4">
+            <span className="max-w-[18ch] text-xs font-bold uppercase tracking-[0.1em]">Operator · Advisor · Builder</span>
+            <span className="text-xs">Chicago</span>
           </div>
         </div>
 
-        {/* Content */}
-        <div>
-          <div className="reveal label-caps flex items-center gap-3 mb-5">
-            <span className="w-6 h-[0.5px] bg-gold" />
-            Founder
+        <div className="flex flex-col justify-between lg:pl-8">
+          <div>
+            <span className="eyebrow text-[#2447e8]">About Ameer</span>
+            <h2 id="about-title" className="display mt-7 max-w-[11ch] text-[clamp(3.2rem,6vw,6.4rem)] leading-[0.92]">
+              I work where the product meets the market.
+            </h2>
           </div>
-          <h2
-            className="reveal reveal-delay-1 font-display text-[clamp(2.2rem,4.5vw,3.8rem)] font-light leading-[1.05] text-warm-white mb-8"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Ameer Khan
-          </h2>
 
-          <blockquote
-            className="reveal reveal-delay-2 text-[clamp(1.2rem,2vw,1.6rem)] font-light italic text-warm-white leading-[1.5] my-8 pl-6 border-l border-gold"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            &ldquo;Most organizations don&rsquo;t have an AI problem.
-            <br />
-            They have a clarity problem.&rdquo;
+          <div className="mt-12 grid gap-7 border-t border-black/25 pt-7 md:grid-cols-2">
+            <p className="text-base leading-7 text-black/70">
+              I help early-stage teams make better product decisions, tell a sharper
+              story, and create the relationships that move a company forward.
+            </p>
+            <p className="text-base leading-7 text-black/70">
+              My current portfolio spans personal health data, AI-agent governance,
+              decentralized finance, and computational expert intelligence. The
+              categories change; the work remains the same: turn complexity into
+              traction.
+            </p>
+          </div>
+
+          <blockquote className="display mt-12 border-l-4 border-[#ee5d32] pl-6 text-[clamp(2rem,3.6vw,3.6rem)] leading-[1.02]">
+            “The best strategy is specific enough to change what gets built next.”
           </blockquote>
-
-          <p className="reveal reveal-delay-2 text-[0.92rem] font-light text-txt-muted-light leading-[1.8] mb-4 max-w-[50ch]">
-            Ameer Khan is a technologist, strategist, and educator at the
-            intersection of artificial intelligence and decentralized systems.
-            Over a decade working inside and alongside enterprises, Ameer has
-            developed a rare ability to translate deeply technical concepts into
-            actionable business strategy.
-          </p>
-          <p className="reveal reveal-delay-3 text-[0.92rem] font-light text-txt-muted-light leading-[1.8] max-w-[50ch]">
-            Khanate Industries exists because the gap between what&rsquo;s
-            possible with AI and Web3 — and what most organizations actually
-            implement — remains enormous. We close that gap.
-          </p>
-
-          <div className="reveal reveal-delay-4 flex flex-wrap gap-2 mt-8">
-            {skills.map((skill) => (
-              <span
-                key={skill}
-                className="text-[0.68rem] font-normal tracking-wide text-txt-muted-light py-1.5 px-3 border border-border-subtle rounded-sm transition-all duration-600 hover:border-border-gold hover:text-gold"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     </section>

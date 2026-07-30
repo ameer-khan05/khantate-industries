@@ -5,28 +5,36 @@ import "./globals.css";
 const dmSans = DM_Sans({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Khanate Industries — AI & Web3 Advisory",
+  metadataBase: new URL("https://khanate.xyz"),
+  title: "Ameer Khan — Product, GTM & Business Development",
   description:
-    "Khanate Industries helps business leaders and enterprises navigate AI and Web3. Expert advisory, strategy, and education from Ameer Khan.",
+    "Ameer Khan is an operator, advisor, and builder working across product, go-to-market, and business development with emerging-technology ventures.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Khanate Industries — AI & Web3 Advisory",
+    title: "Ameer Khan — Operator, Advisor & Builder",
     description:
-      "Helping enterprises understand and leverage AI and Web3 technologies.",
+      "Building products, markets, and partnerships across AI, digital health, agent infrastructure, and decentralized finance.",
     type: "website",
-    url: "https://khantate-industries.vercel.app",
+    url: "https://khanate.xyz",
+    siteName: "Khanate",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
+    title: "Ameer Khan — Operator, Advisor & Builder",
+    description:
+      "Product, go-to-market, and business development for ambitious technology ventures.",
   },
 };
 
@@ -36,10 +44,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${dmSans.variable} ${cormorantGaramond.variable} antialiased`}
-      >
+    <html lang="en">
+      <body className={`${dmSans.variable} ${cormorantGaramond.variable}`}>
         {children}
       </body>
     </html>

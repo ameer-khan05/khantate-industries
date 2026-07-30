@@ -1,27 +1,21 @@
 const items = [
-  "Artificial Intelligence Strategy",
-  "Web3 & Blockchain Advisory",
-  "Executive Education",
-  "Innovation Roadmapping",
-  "Enterprise AI Readiness",
-  "DeFi Strategy",
+  "Product strategy",
+  "Go-to-market",
+  "Business development",
+  "Positioning",
+  "Partnerships",
+  "Venture building",
 ];
 
-const allItems = [...items, ...items];
-
 export function Ticker() {
+  const doubled = [...items, ...items];
+
   return (
-    <div
-      className="border-y border-border-subtle py-4 overflow-hidden bg-charcoal"
-      aria-hidden="true"
-    >
-      <div className="flex gap-14 animate-ticker whitespace-nowrap">
-        {allItems.map((item, index) => (
-          <span
-            key={`${item}-${index}`}
-            className="inline-flex items-center gap-3 text-[0.7rem] font-normal tracking-[0.15em] uppercase text-txt-muted shrink-0"
-          >
-            <span className="w-1 h-1 bg-gold/60 rounded-full shrink-0" />
+    <div className="overflow-hidden border-b border-black/20 bg-[#d7f63c] py-3.5" aria-hidden="true">
+      <div className="ticker-track flex w-max items-center">
+        {doubled.map((item, index) => (
+          <span key={`${item}-${index}`} className="flex shrink-0 items-center text-[0.7rem] font-bold uppercase tracking-[0.13em]">
+            <span className="mx-7 size-1.5 bg-[#17191d]" />
             {item}
           </span>
         ))}
